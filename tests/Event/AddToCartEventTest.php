@@ -3,7 +3,7 @@
 namespace kevinfrom\GA4MP\Tests\Event;
 
 use kevinfrom\GA4MP\Events\Ecom\AddToCart;
-use kevinfrom\GA4MP\Events\Ecom\EcomItem;
+use kevinfrom\GA4MP\Events\EventItem;
 use kevinfrom\GA4MP\Http\Payload;
 use kevinfrom\GA4MP\Http\Response;
 use kevinfrom\GA4MP\Tests\BaseTestCase;
@@ -12,8 +12,8 @@ class AddToCartEventTest extends BaseTestCase
 {
     public function testAddToCartEvent(): void
     {
-        $item = new EcomItem(1, 'Test product');
-        $this->assertInstanceOf(EcomItem::class, $item);
+        $item = new EventItem(1, 'Test product');
+        $this->assertInstanceOf(EventItem::class, $item);
         $this->assertEquals(1, $item->getItemId());
         $this->assertEquals('Test product', $item->getItemName());
 
@@ -30,7 +30,7 @@ class AddToCartEventTest extends BaseTestCase
         $this->assertInstanceOf(AddToCart::class, $event);
 
         $event->addItem($item);
-        $this->assertInstanceOf(EcomItem::class, $event->getEventParams('items')[0]);
+        $this->assertInstanceOf(EventItem::class, $event->getEventParams('items')[0]);
         $this->assertCount(1, $event->getItems());
 
         $this->assertEquals($event->getEventParams('value'), 200);
@@ -51,8 +51,8 @@ class AddToCartEventTest extends BaseTestCase
 
     public function testValidateAddToCartEvent(): void
     {
-        $item1 = new EcomItem(1, 'Test product');
-        $this->assertInstanceOf(EcomItem::class, $item1);
+        $item1 = new EventItem(1, 'Test product');
+        $this->assertInstanceOf(EventItem::class, $item1);
         $this->assertEquals(1, $item1->getItemId());
         $this->assertEquals('Test product', $item1->getItemName());
 
@@ -65,8 +65,8 @@ class AddToCartEventTest extends BaseTestCase
         $item1->setQuantity(2);
         $this->assertEquals(2, $item1->getQuantity());
 
-        $item2 = new EcomItem(2, 'Test product 2');
-        $this->assertInstanceOf(EcomItem::class, $item2);
+        $item2 = new EventItem(2, 'Test product 2');
+        $this->assertInstanceOf(EventItem::class, $item2);
         $this->assertEquals(2, $item2->getItemId());
         $this->assertEquals('Test product 2', $item2->getItemName());
 
