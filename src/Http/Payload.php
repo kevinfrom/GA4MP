@@ -22,23 +22,23 @@ class Payload
     private ?string $userId = null;
 
     /**
-     * @var \kevinfrom\GA4MP\PayloadData\Events\Event[] $events
+     * @var \kevinfrom\GA4MP\Events\SimpleEvent[] $events
      */
     private array $events = [];
 
     /**
-     * @var \kevinfrom\GA4MP\PayloadData\UserProvidedData|null $userProvidedData
+     * @var \kevinfrom\GA4MP\Data\UserProvidedData|null $userProvidedData
      */
     private ?UserProvidedData $userProvidedData = null;
 
     /**
-     * @var \kevinfrom\GA4MP\PayloadData\Consent|null $consent
+     * @var \kevinfrom\GA4MP\Data\Consent|null $consent
      */
     private ?Consent $consent = null;
 
     /**
-     * @param string                                    $clientId
-     * @param \kevinfrom\GA4MP\PayloadData\Events\Event $firstEvent
+     * @param string                              $clientId
+     * @param \kevinfrom\GA4MP\Events\SimpleEvent $firstEvent
      */
     public function __construct(string $clientId, SimpleEvent $firstEvent)
     {
@@ -97,7 +97,7 @@ class Payload
     /**
      * Get events
      *
-     * @return \kevinfrom\GA4MP\PayloadData\Events\Event[]
+     * @return \kevinfrom\GA4MP\Events\SimpleEvent[]
      */
     public function getEvents(): array
     {
@@ -107,7 +107,7 @@ class Payload
     /**
      * Add event to the payload data
      *
-     * @param \kevinfrom\GA4MP\PayloadData\Events\Event $event
+     * @param \kevinfrom\GA4MP\Events\SimpleEvent $event
      *
      * @return $this
      */
@@ -121,7 +121,7 @@ class Payload
     /**
      * Set user provided data
      *
-     * @param \kevinfrom\GA4MP\PayloadData\UserProvidedData|null $userProvidedData
+     * @param \kevinfrom\GA4MP\Data\UserProvidedData|null $userProvidedData
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ class Payload
     /**
      * Get user provided data
      *
-     * @return \kevinfrom\GA4MP\PayloadData\UserProvidedData|null
+     * @return \kevinfrom\GA4MP\Data\UserProvidedData|null
      */
     public function getUserProvidedData(): ?UserProvidedData
     {
@@ -145,7 +145,7 @@ class Payload
     /**
      * Set consent
      *
-     * @param \kevinfrom\GA4MP\PayloadData\Consent|null $consent
+     * @param \kevinfrom\GA4MP\Data\Consent|null $consent
      *
      * @return $this
      */
@@ -159,7 +159,7 @@ class Payload
     /**
      * Get consent
      *
-     * @return \kevinfrom\GA4MP\PayloadData\Consent|null
+     * @return \kevinfrom\GA4MP\Data\Consent|null
      */
     public function getConsent(): ?Consent
     {
@@ -171,25 +171,14 @@ class Payload
      */
     public function formatData(): array
     {
-        $data = [
+        return array_filter([
             'client_id' => $this->getClientId(),
             'events'    => array_map(function (SimpleEvent $event) {
                 return $event->formatData();
             }, $this->getEvents()),
-        ];
-
-        if ($this->getUserId()) {
-            $data['user_id'] = $this->getUserId();
-        }
-
-        if ($this->getUserProvidedData()) {
-            $data['user_data'] = $this->getUserProvidedData()->formatData();
-        }
-
-        if ($this->getConsent()) {
-            $data['consent'] = $this->getConsent()->formatData();
-        }
-
-        return $data;
+            'user_id'   => $this->getUserId(),
+            'user_data' => $this->getUserProvidedData() ? $this->getUserProvidedData()->formatData() : null,
+            'consent'   => $this->getConsent() ? $this->getConsent()->formatData() : null,
+        ]);
     }
 }
