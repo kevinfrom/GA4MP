@@ -9,7 +9,7 @@ use kevinfrom\GA4MP\Tests\BaseTestCase;
 use kevinfrom\GA4MP\Http\Client;
 use kevinfrom\GA4MP\Http\Payload;
 use kevinfrom\GA4MP\Http\Response;
-use kevinfrom\GA4MP\Events\PageView;
+use kevinfrom\GA4MP\Events\Generic\PageView;
 
 class HttpClientTest extends BaseTestCase
 {

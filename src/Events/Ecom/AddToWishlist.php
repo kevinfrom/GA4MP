@@ -2,7 +2,9 @@
 
 namespace kevinfrom\GA4MP\Events\Ecom;
 
-class AddToWishlist extends EcomEvent
+use kevinfrom\GA4MP\Events\Event;
+
+class AddToWishlist extends Event
 {
     protected string $eventName = 'add_to_wishlist';
 }

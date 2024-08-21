@@ -1,8 +1,10 @@
 <?php
 
-namespace kevinfrom\GA4MP\Events;
+namespace kevinfrom\GA4MP\Events\Generic;
 
-class PageView extends Event
+use kevinfrom\GA4MP\Events\SimpleEvent;
+
+class PageView extends SimpleEvent
 {
     public function __construct(string $pageLocation, string $pageTitle, array $rawParams = [])
     {

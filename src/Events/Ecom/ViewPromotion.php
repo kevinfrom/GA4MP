@@ -2,7 +2,9 @@
 
 namespace kevinfrom\GA4MP\Events\Ecom;
 
-class ViewPromotion extends EcomEvent
+use kevinfrom\GA4MP\Events\Event;
+
+class ViewPromotion extends Event
 {
     protected string $eventName = 'view_promotion';
 }

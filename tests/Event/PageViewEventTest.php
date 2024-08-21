@@ -2,7 +2,7 @@
 
 namespace kevinfrom\GA4MP\Tests\Event;
 
-use kevinfrom\GA4MP\Events\PageView;
+use kevinfrom\GA4MP\Events\Generic\PageView;
 use kevinfrom\GA4MP\Http\Payload;
 use kevinfrom\GA4MP\Http\Response;
 use kevinfrom\GA4MP\Tests\BaseTestCase;

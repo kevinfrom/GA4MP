@@ -2,7 +2,9 @@
 
 namespace kevinfrom\GA4MP\Events\Ecom;
 
-class RemoveFromCart extends EcomEvent
+use kevinfrom\GA4MP\Events\Event;
+
+class RemoveFromCart extends Event
 {
     protected string $eventName = 'remove_from_cart';
 }

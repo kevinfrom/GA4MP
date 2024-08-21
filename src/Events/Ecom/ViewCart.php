@@ -2,7 +2,9 @@
 
 namespace kevinfrom\GA4MP\Events\Ecom;
 
-class ViewCart extends EcomEvent
+use kevinfrom\GA4MP\Events\Event;
+
+class ViewCart extends Event
 {
     protected string $eventName = 'view_cart';
 }

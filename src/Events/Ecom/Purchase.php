@@ -2,7 +2,9 @@
 
 namespace kevinfrom\GA4MP\Events\Ecom;
 
-class Purchase extends EcomEvent
+use kevinfrom\GA4MP\Events\Event;
+
+class Purchase extends Event
 {
     protected string $eventName = 'purchase';
 }

@@ -4,7 +4,7 @@ namespace kevinfrom\GA4MP\Http;
 
 use kevinfrom\GA4MP\Data\Consent;
 use kevinfrom\GA4MP\Utility\Formattable;
-use kevinfrom\GA4MP\Events\Event;
+use kevinfrom\GA4MP\Events\SimpleEvent;
 use kevinfrom\GA4MP\Data\UserProvidedData;
 
 class Payload
@@ -40,7 +40,7 @@ class Payload
      * @param string                                    $clientId
      * @param \kevinfrom\GA4MP\PayloadData\Events\Event $firstEvent
      */
-    public function __construct(string $clientId, Event $firstEvent)
+    public function __construct(string $clientId, SimpleEvent $firstEvent)
     {
         $this->setClientId($clientId);
         $this->addEvent($firstEvent);
@@ -111,7 +111,7 @@ class Payload
      *
      * @return $this
      */
-    public function addEvent(Event $event): self
+    public function addEvent(SimpleEvent $event): self
     {
         $this->events[] = $event;
 
@@ -173,7 +173,7 @@ class Payload
     {
         $data = [
             'client_id' => $this->getClientId(),
-            'events'    => array_map(function (Event $event) {
+            'events'    => array_map(function (SimpleEvent $event) {
                 return $event->formatData();
             }, $this->getEvents()),
         ];

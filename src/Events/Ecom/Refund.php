@@ -2,7 +2,9 @@
 
 namespace kevinfrom\GA4MP\Events\Ecom;
 
-class Refund extends EcomEvent
+use kevinfrom\GA4MP\Events\Event;
+
+class Refund extends Event
 {
     protected string $eventName = 'refund';
 }

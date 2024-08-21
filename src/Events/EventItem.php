@@ -1,11 +1,11 @@
 <?php
 
-namespace kevinfrom\GA4MP\Events\Ecom;
+namespace kevinfrom\GA4MP\Events;
 
 use InvalidArgumentException;
 use kevinfrom\GA4MP\Utility\Formattable;
 
-class EcomItem
+class EventItem
 {
     use Formattable;
 

@@ -2,123 +2,53 @@
 
 namespace kevinfrom\GA4MP\Events;
 
-use kevinfrom\GA4MP\Utility\Formattable;
-
-abstract class Event
+abstract class Event extends SimpleEvent
 {
-    use Formattable;
-
     /**
-     * @var string $eventName
+     * @param float                               $value
+     * @param string                              $currency
+     * @param \kevinfrom\GA4MP\Events\EventItem[] $items
+     * @param array                               $rawParams
      */
-    protected string $eventName;
-
-    /**
-     * @var array $eventParams
-     */
-    protected array $eventParams;
-
-    /**
-     * @var bool $debug_mode
-     */
-    protected bool $debug_mode = false;
-
-    /**
-     * @param string $eventName
-     * @param array  $eventParams
-     */
-    public function __construct(string $eventName, array $eventParams)
+    public function __construct(float $value, string $currency, array $items = [], array $rawParams = [])
     {
-        $this->eventName   = $eventName;
-        $this->eventParams = $eventParams;
+        parent::__construct($this->eventName, array_merge($rawParams, [
+            'value'    => $value ? round($value, 2) : null,
+            'currency' => $currency,
+            'items'    => array_map(function (EventItem $item) {
+                return $item->formatData();
+            }, $items),
+        ]));
+    }
+    /**
+     * Get ecommerce items
+     *
+     * @return \kevinfrom\GA4MP\Events\EventItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->getEventParams('items');
     }
 
     /**
-     * Get event name
+     * Add ecommerce item
      *
-     * @return string
-     */
-    public function getEventName(): string
-    {
-        return $this->eventName;
-    }
-
-    /**
-     * Set event name
-     *
-     * @param string $eventName
+     * @param \kevinfrom\GA4MP\Events\EventItem $item
      *
      * @return $this
      */
-    public function setEventName(string $eventName): self
+    public function addItem(EventItem $item): self
     {
-        $this->eventName = $eventName;
+        $params = $this->getEventParams();
 
-        return $this;
-    }
-
-    /**
-     * Get event params
-     *
-     * @param string|null $key
-     *
-     * @return array|mixed|null
-     */
-    public function getEventParams(?string $key = null)
-    {
-        if ($key) {
-            return $this->eventParams[$key] ?? null;
+        if (!isset($params['items'])) {
+            $params['items'] = [];
         }
 
-        return $this->eventParams;
-    }
+        $params['items'][] = $item;
 
-    /**
-     * Set event params
-     *
-     * @param array $eventParams
-     *
-     * @return $this
-     */
-    public function setEventParams(array $eventParams): self
-    {
-        $this->eventParams = $eventParams;
+        $this->setEventParams($params);
 
         return $this;
-    }
-
-    /**
-     * Get debug mode
-     *
-     * @return bool
-     */
-    public function getDebugMode(): bool
-    {
-        return $this->debug_mode;
-    }
-
-    /**
-     * Set debug mode
-     *
-     * @param bool $debugMode
-     *
-     * @return $this
-     */
-    public function setDebugMode(bool $debugMode): self
-    {
-        $this->debug_mode = $debugMode;
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function formatData(): array
-    {
-        return [
-            'name'   => $this->eventName,
-            'params' => $this->eventParams,
-        ];
     }
 }
