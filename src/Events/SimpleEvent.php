@@ -116,9 +116,9 @@ abstract class SimpleEvent
      */
     public function formatData(): array
     {
-        return [
+        return array_filter([
             'name'   => $this->eventName,
             'params' => $this->eventParams,
-        ];
+        ]);
     }
 }
