@@ -13,6 +13,12 @@ the risk of errors and makes it easier to track events and user interactions.
 It also makes it very easy to track events and user interactions by providing a simple and intuitive API. You can create events, user properties, and user interactions using
 simple classes and methods, and then send the data to the API with a single method call, and multiple events can be sent for the same user in a single request!
 
+## Installation
+
+You can install the library via Composer. Run the following command:
+
+`composer require kevinfrom/ga4mp`
+
 ## Example: `sign_up`
 
 This example shows how to track a `sign_up` event.
